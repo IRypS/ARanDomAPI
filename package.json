@@ -1,0 +1,34 @@
+{
+  "name": "arandomapi",
+  "version": "1.0.0",
+  "description": "First API for our project in flutter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IRypS/ARanDomAPI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IRypS/ARanDomAPI/issues"
+  },
+  "homepage": "https://github.com/IRypS/ARanDomAPI#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-validator": "^6.14.0",
+    "mongoose": "^6.3.3",
+    "mongoose-delete": "^0.5.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
