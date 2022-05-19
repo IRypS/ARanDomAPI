@@ -1,0 +1,88 @@
+NOTA:!!!! 
+CREAR UN ARCHIVO .env
+en la ruta PRINCIPAL y ponerle lo siguiente
+PORT = 1502
+DB_URI = mongodb+srv://adminDiv1:admin01@clusterdiv.vmqek.mongodb.net/API_DIV?retryWrites=true&w=majority
+URL_PUBLIC = http://localhost:1502/
+
+!! -> TOY SIN INTER, BESITOS
+
+ESTRUCTURA:
+1.- CARPETA config:           aqui estará la coneccion con mongo
+                              -> mongo.js (Coneccion con mongo mediante la uri) LINEA 5
+                              LINEA 8: Capta un error, si no existen errores, imprime conexion existosa
+
+2.- CARPETA CONTROLLERS:      aqui estarán los controladores de cada ruta (basicamente la logica a seguir de cada ruta)
+                              -> auth.js (logica para el registro y el login)
+                              LINEA 1: se inmporta handlePassword
+                              LINEA 2: Se llaman a los manejadores de errores
+                              LINEA 7: Se llama al modelo de usua
+                              LINEA 8: Se llama a un modulo que compara y se asegura de que los datos deben ser enviados tal y como se piden
+                              LINEA 17: Controlador para el login
+                              LINEA 20: Si NO existe el usuario lanza un error
+                              LINEA 27: Si la contraseña NO coincide lanza un error
+                              LINEA 32: Envia una respuesta
+                              LINEA 45: Se encarga de registra a un usuario
+                              LINEA 49: SI el usuario existe, entonces lanza un error
+                              LINEA 53: Se encripta la contraseña
+                              LINEA 54: Se añade la contraseña encriptada y se añade a una sola dara
+                              LINEA 55: Se crea el objeto usando el modelo
+
+3.- CARPETA models:           aqui estaran los modelos de la base de datos (Estructura de los datos)
+                              -> index.js (indexa todas los modelos de la carpeta)
+                              -> user.js (indica todas los campos y tipos de datos de los objetos para el usuario)
+
+4.- CARPETA routes:           aqui se encontraran las rutas, todas indexadas dentro de un archivo index.js
+                              -> index.js (indexa las rutas mediante la siguiente metodologia:
+                                  LINEA 19: Lee y saca todos los nombres de los archivos para almacenarlos en una array
+                                  LINEA 19: filter() Itera el array para leer cada nombre de arhivo EJEMPLO "album.js". y devuelve "album"
+                                  LINEA 22: añade las rutas de acuerdo a cada contenido iterado)
+                              -> auth.js (contiene las rutas a usar y el llamado a los controladores y validadores)
+
+5.- CARPETA utils:            aqui se encontraran manejadores de eventos:
+                              -> handleError: mostrara mensajes de error cuandos ea llamado
+                              -> handlePassword: Nos ayudará a recibir uan contraseña y cifrarla
+                              -> handleValidator: Un filtro, que hace que si las validaciones salieron correctas el programa siga o si hay errores que los muestre
+
+6.- CARPETA validators        validaciones de los datos que se envian
+                              -> auth.js (valida los datos segun corresponda, [si existen, si estan vacios, si deben ser numeros, etc])
+
+
+
+7- CARPETA PRINCIPAL:         osase la carpeta raiz 
+
+                              -> .env
+                                  variables de entorno (URI, PUERTO, ETC)
+
+                              -> .env.example
+                                  un modelo referencial para el archivo .env
+
+                              -> .gitignore
+                                  archivo que indica que archivos ignorar al momento de subir al repositorio
+
+                              -> index.js
+                                  aqui se encuentran:
+                                  LINEA 5: Un require para la libreria "dotenv"
+                                            Contexto: la libreria dotenv nos sirve para leer las variables de entorno
+                                            Estas variables se encuentran en el archivo ".env"
+                                            Las variables de entorno nos sirven para separar informacion sensible y tenerla en un arhivo separado e inaccesible
+                                  
+                                  LINEA 7: Uso del modulo express
+                                  LINEA 8: Uso de la libreria "cors", que nos sirve para las cabeceras y demas
+                                  LINEA 9: Se crea la app que usaremos (osase la API) usando express
+                                  LINEA 10: Se llama a la base de datos (carpeta config, mongo js)
+
+                                  LINEA 15: Le decimos a la app que use el modulo cors (importado en la LINEA 8)
+                                  LINEA 16: Le dicimos a la app que use express.json (NOTA: Este reemplaza al body-parser)
+
+                                  LINEA 19: Se define el numero de puerto (Notese que se hace uso de las variables de entorno)
+
+                                  LINEA 20: Se llama al archivo index.js de la carpeta routes para cargar todas las rutas
+
+                                  LINEA 29: Se llama a la funcion listen para pasarle el numero de puerto e imprimir un mensaje en consola
+                              
+                              -> package-lock.json 
+                                  Nunca supe para que servia, versionamiento corresponda
+                              
+                              -> package.json 
+                                  Contiene las librerias o modulos a usar
