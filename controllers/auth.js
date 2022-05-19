@@ -5,7 +5,7 @@ const {
 } = require('../utils/handleError');
 
 const { userModel } = require('../models');
-const { machedData } = require('express-validator');
+const { matchedData } = require('express-validator');
 
 
 /**
@@ -16,7 +16,7 @@ const { machedData } = require('express-validator');
  */
 const loginCtrl = async (req, res) => {
   try{
-    const body = machedData(req);
+    const body = matchedData(req);
     const user = await userModel.findOne({ email: body.email });
     if(!user) {
       handleErrorResponse(res, 'EL_USUARIO_NO_EXISTE', 404);
@@ -44,7 +44,7 @@ const loginCtrl = async (req, res) => {
  */
 const registerCtrl = async(req, res) => {
   try{
-    const body = machedData(req);
+    const body = matchedData(req);
     const checkIsExist = await userModel.findOne({ email: body.email });
     if(checkIsExist) {
       handleErrorResponse(res, 'USER_EXIST');
@@ -57,6 +57,7 @@ const registerCtrl = async(req, res) => {
 
   } catch(e){
     handleHttpError(res, e);
+    console.log(e);
   }
 };
 
