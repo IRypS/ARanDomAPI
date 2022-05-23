@@ -7,7 +7,7 @@ const fs = require('fs');
 const router = express.Router();
 
 const pathRouter = `${__dirname}`;
-//console.log(pathRouter);
+console.log(pathRouter);
 
 const removeExtension = (fileName) => {
   return fileName.split('.').shift();
@@ -26,3 +26,4 @@ fs.readdirSync(pathRouter).filter((file) => {
 });
 
 module.exports = router;
+

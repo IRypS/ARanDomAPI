@@ -57,9 +57,10 @@ const createItem = async (req, res) => {
 const updateItem = async (req, res) => {
   try {
     req = matchedData(req);
-    const { id, ...body } = req;
-
-    const data = await productModel.findOneAndUpdate(id, body, {
+    //const body = req;
+    //const id = req.id;
+    const {id, ...body} = req;
+    const data = await productModel.findOneAndUpdate({_id:id}, body, {
       new: true,
     });
 
@@ -67,6 +68,7 @@ const updateItem = async (req, res) => {
 
   } catch (e) {
     handleHttpError(res, e);
+    console.log(e);
   }
 };
 
