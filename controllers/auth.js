@@ -73,12 +73,13 @@ const changePassword = async(req, res) => {
     }
     const checkPassword = await compare(req.body.oldPassword, user.password);
     if(!checkPassword){
-      handleErrorResponse(res, 'LAS_CONTRASEÑAS_COINCIDEN');
+      handleErrorResponse(res, 'LAS_CONTRASEÑAS_NO_COINCIDEN');
       return;
     }
     const password = await encrypt(req.body.password);
+    const oldPassword = req.body.oldPassword;
     /*const user1 = req.body.email*/
-    const data = await userModel.updateOne({ email : user.email }, { $set: { password: password } });
+    const data = await userModel.updateOne({ email : user.email }, { $set: { password: password, oldPassword : oldPassword } });
     res.send({data});
     //res.send(req.body.email);
   }catch(e){
