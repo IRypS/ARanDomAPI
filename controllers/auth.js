@@ -51,7 +51,8 @@ const registerCtrl = async(req, res) => {
       return;
     }
     const password = await encrypt(body.password);
-    const bodyInsert = { ...body, password };
+    const oldPassword = password;
+    const bodyInsert = { ...body, password, oldPassword };
     const data = await userModel.create(bodyInsert);
     res.send({data});
 
@@ -77,7 +78,7 @@ const changePassword = async(req, res) => {
       return;
     }
     const password = await encrypt(req.body.password);
-    const oldPassword = req.body.oldPassword;
+    const oldPassword = user.password;
     /*const user1 = req.body.email*/
     const data = await userModel.updateOne({ email : user.email }, { $set: { password: password, oldPassword : oldPassword } });
     res.send({data});
