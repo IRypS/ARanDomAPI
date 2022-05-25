@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { matchedData } = require("express-validator");
-const { handleHttpError } = require("../utils/handleError");
+const { handleHttpError, handleErrorResponse } = require("../utils/handleError");
 const { productModel } = require("../models");
 
 /**
@@ -42,10 +42,16 @@ const createItem = async (req, res) => {
   try {
     req = matchedData(req);
     console.log(req);
+    const checkIsExist = await productModel.findOne({ name: req.name });
+    if(checkIsExist) {
+      handleErrorResponse(res, 'PRODUCT_EXIST');
+      return;
+    }
     const data = await productModel.create(req);
     res.send({ data });
   } catch (e) {
     handleHttpError(res, e);
+    console.log(e);
   }
 };
 

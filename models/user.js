@@ -16,6 +16,9 @@ const UserScheme = new mongoose.Schema(
     password: {
       type: String,
     },
+    oldPassword: {
+      type: String,
+    },
     role: {
       type: ['user', 'admin'],
       default: 'user',
