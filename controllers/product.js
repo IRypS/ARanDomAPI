@@ -44,8 +44,16 @@ const createItem = async (req, res) => {
     console.log(req);
     const checkIsExist = await productModel.findOne({ name: req.name });
     if(checkIsExist) {
-      handleErrorResponse(res, 'PRODUCT_EXIST');
-      return;
+      /* handleErrorResponse(res, 'PRODUCT_EXIST');
+      return; */
+      try {
+        const data = await productModel.findOneAndUpdate({_id:checkIsExist._id}, { name: req.name, price : req.price, description : req.description }, {
+          new: true,
+        });
+      } catch (e) {
+        handleHttpError(res, e);
+        console.log(e);
+      }
     }
     const data = await productModel.create(req);
     res.send({ data });
